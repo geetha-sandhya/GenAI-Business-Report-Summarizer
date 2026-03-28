@@ -1,7 +1,5 @@
 streamlit
-transformers
-torch
-pandas
-numpy
+transformers==4.36.2
+torch==2.1.0
+sentencepiece
 PyPDF2
-pypdf

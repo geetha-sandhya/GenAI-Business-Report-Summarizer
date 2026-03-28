@@ -2,6 +2,8 @@ import streamlit as st
 from pypdf import PdfReader
 from transformers import pipeline
 
+summarizer = pipeline("summarization", model="sshleifer/distilbart-cnn-12-6")
+
 st.title("AI Business Report Summarizer")
 
 uploaded_file = st.file_uploader("Upload a PDF file", type="pdf")
