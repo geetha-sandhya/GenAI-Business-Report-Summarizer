@@ -2,24 +2,30 @@ import streamlit as st
 from pypdf import PdfReader
 from transformers import pipeline
 
-summarizer = pipeline("summarization", model="sshleifer/distilbart-cnn-12-6")
+st.title("GenAI Business Report Summarizer")
 
-st.title("AI Business Report Summarizer")
-
-uploaded_file = st.file_uploader("Upload a PDF file", type="pdf")
+uploaded_file = st.file_uploader("Upload a business report (PDF)", type="pdf")
 
 if uploaded_file is not None:
     reader = PdfReader(uploaded_file)
     text = ""
 
+    # read first 2 pages
     for page in reader.pages[:2]:
         text += page.extract_text()
 
+    st.write("Generating summary...")
+
+    # load AI model
     generator = pipeline("text-generation", model="google/flan-t5-base")
 
+    # create prompt
     prompt = "Summarize this business report:\n" + text
 
-    result = generator(prompt, max_length=150)
+    # generate summary
+    result = generator(prompt, max_length=200)
 
-    st.subheader("Summary:")
-    st.write(result[0]["generated_text"])
+    summary = result[0]["generated_text"].replace("Summarize this business report:", "")
+
+    st.subheader("Summary")
+    st.write(summary)
