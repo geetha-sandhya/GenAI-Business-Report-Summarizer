@@ -24,7 +24,7 @@ if uploaded_file is not None:
 
     # generate summary
     result = generator(prompt, max_length=200)
-
+# update
     summary = result[0]["generated_text"].replace("Summarize this business report:", "")
 
     st.subheader("Summary")
